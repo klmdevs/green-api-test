@@ -1,12 +1,11 @@
-const apiOrigin = 'https://7107.api.greenapi.com'
-
+ 
 function getFields(fields) {
   return fields.reduce((acc, fieldId) => {
     const element = document.getElementById(fieldId)
     if (element) {
       acc[fieldId] = element
     } else {
-      console.log(`Element with id ${fieldId} not found`)
+      printError(`Error: Element with id ${fieldId} not found`)
     }
     return acc
   }, {})
@@ -22,8 +21,13 @@ function isValidUrl(string) {
 }
 
 function printError(err) {
-  const { outputContent } = getFields(['outputContent'])
+  const outputContent =  document.getElementById('outputContent')
   outputContent.value = err
+}
+
+function printResult(data) {
+  const outputContent =  document.getElementById('outputContent')
+  outputContent.value = JSON.stringify(data, null, 4)
 }
 
 function getAuthParams() {
@@ -43,6 +47,8 @@ function getAuthParams() {
 }
 
 async function apiRequest(path, method = 'GET', data = null, headers = {}) {
+  const apiOrigin = 'https://7107.api.greenapi.com'
+
   try {
     const url = new URL(path, apiOrigin).href
     console.log(url)
@@ -82,36 +88,35 @@ async function apiRequest(path, method = 'GET', data = null, headers = {}) {
 async function getSettings() {
   const { idInstance, apiTokenInstance } = getAuthParams()
   const data = await apiRequest(`${idInstance}/getSettings/${apiTokenInstance}`)
-  const { outputContent } = getFields(['outputContent'])
-  outputContent.value = JSON.stringify(data)
+  printResult(data)
 }
 
 async function getStateInstance() {
   const { idInstance, apiTokenInstance } = getAuthParams()
   const data = await apiRequest(`${idInstance}/getStateInstance/${apiTokenInstance}`)
-  const { outputContent } = getFields(['outputContent'])
-  outputContent.value = JSON.stringify(data)
+  printResult(data)
 }
 
 async function sendMessage() {
-  const { message, phoneNumber, outputContent } = getFields(['message', 'phoneNumber', 'outputContent'])
   const { idInstance, apiTokenInstance } = getAuthParams()
+  const { message, phoneNumber } = getFields(['message', 'phoneNumber'])
   const data = await apiRequest(`${idInstance}/sendMessage/${apiTokenInstance}`, 'POST', {
     chatId: phoneNumber.value + '@c.us',
     message: message.value,
   })
-  outputContent.value = JSON.stringify(data)
+  printResult(data)
 }
 
 async function sendFileByUrl() {
-  const { phoneNumber, outputContent, fileUrl } = getFields(['message', 'phoneNumber', 'outputContent', 'fileUrl'])
+  const { idInstance, apiTokenInstance } = getAuthParams()
+  const { phoneNumber2,  fileUrl } = getFields(['phoneNumber2', 'fileUrl'])
 
   if (!isValidUrl(fileUrl.value)) return printError('Error: Invalid URL')
 
-  const { idInstance, apiTokenInstance } = getAuthParams()
   const data = await apiRequest(`${idInstance}/sendFileByUrl/${apiTokenInstance}`, 'POST', {
-    chatId: phoneNumber.value + '@c.us',
+    chatId: phoneNumber2.value + '@c.us',
     urlFile: fileUrl.value,
+    fileName: fileUrl.value.split('/').pop() || 'file'
   })
-  outputContent.value = JSON.stringify(data)
+  printResult(data)
 }
