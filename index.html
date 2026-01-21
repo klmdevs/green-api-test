@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GREEN-API test</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="main">
+      <div class="panel">
+        <div class="auth">
+          <input type="text" class="input" placeholder="idInstance" id="idInstance" />
+          <input type="text" class="input" placeholder="apiTokenInstance" id="apiTokenInstance" />
+        </div>
+        <div class="get-instance panel-section">
+          <button type="button" class="button" onclick="getSettings()">getSettings</button>
+          <button type="button" class="button" onclick="getStateInstance()">getStateInstance</button>
+        </div>
+        <div class="send-message panel-section">
+          <input type="text" class="input" placeholder="Phone number" id="phoneNumber" />
+          <input type="text" class="input" placeholder="Message" id="message" />
+          <button type="button" class="button" onclick="sendMessage()">sendMessage</button>
+        </div>
+        <div class="send-file-ur panel-section">
+          <input type="text" class="input" placeholder="Phone number" id="phoneNumber2" />
+          <input type="text" class="input" placeholder="File url" id="fileUrl" />
+          <button type="button" class="button" onclick="sendFileByUrl()">sendFileByUrl</button>
+        </div>
+      </div>
+      <div class="output">
+        <div>Response:</div>
+        <textarea class="textarea" id="outputContent" readonly></textarea>
+      </div>
+    </div>
+  </body>
+  <script src="script.js" defer></script>
+</html>
