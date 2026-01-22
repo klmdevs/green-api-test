@@ -42,7 +42,6 @@ function getAuthParams() {
     }
   } catch (error) {
     printError(`Error: ${error.message}`)
-    throw error
   }
 }
 
