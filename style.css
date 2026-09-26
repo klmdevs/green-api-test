@@ -1,53 +1,438 @@
-.body {
+:root {
+  --bg: #f4f7f5;
+  --surface: #ffffff;
+  --surface-muted: #f7faf8;
+  --border: #e2e8e5;
+  --border-strong: #cfdad4;
+  --text: #16211c;
+  --muted: #667a71;
+  --brand: #17a34a;
+  --brand-strong: #0f8a3c;
+  --brand-soft: #e7f7ed;
+  --ring: rgba(23, 163, 74, 0.22);
+  --glow: #d9f5e3;
+  --shadow-sm: 0 1px 2px rgba(16, 32, 25, 0.05);
+  --shadow-md: 0 10px 30px -12px rgba(16, 32, 25, 0.18);
+  --r-lg: 18px;
+  --r-md: 12px;
+  --pad: 20px;
+  --gap: 16px;
+  --field-gap: 14px;
+  --control-h: 44px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1412;
+    --surface: #131c19;
+    --surface-muted: #101816;
+    --border: #22302b;
+    --border-strong: #2e403a;
+    --text: #e7efea;
+    --muted: #91a59d;
+    --brand: #2fc46a;
+    --brand-strong: #25a758;
+    --brand-soft: rgba(47, 196, 106, 0.14);
+    --ring: rgba(47, 196, 106, 0.28);
+    --glow: rgba(23, 163, 74, 0.16);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 14px 34px -16px rgba(0, 0, 0, 0.7);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  min-height: 100vh;
+  background: var(--bg) radial-gradient(1100px 600px at 10% -10%, var(--glow), transparent 62%) fixed;
+  color: var(--text);
+  font: 15px/1.5 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
 }
 
-.input {
-  width: 100%;
-  padding: 10px 5px;
-  border-radius: 4px;
-  outline: none;
-  border: 1px solid gray;
-  margin: 5px 0;
+.page {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 28px 20px 40px;
 }
 
-.textarea {
-  width: 100%;
-  height: 600px;
-  min-height: 200px;
-  resize: none;
-  box-sizing: border-box;
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 20px;
 }
 
-.button {
-  outline: none;
-  border: none;
-  padding: 12px;
-  background-color: greenyellow;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  margin: 10px 0;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  color: #fff;
+  box-shadow: var(--shadow-md);
+}
+
+.brand-mark svg {
+  width: 23px;
+  height: 23px;
+}
+
+.brand-title {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.brand-subtitle {
+  margin: 2px 0 0;
+  font-size: 13.5px;
+  color: var(--muted);
 }
 
 .main {
-  max-width: 1300px;
-  margin: 0 auto;
-  display: flex;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
+  display: grid;
+  gap: 22px;
+  align-items: start;
 }
 
 .panel {
-  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
 }
 
-.output {
+.panel,
+.output,
+.field {
+  min-width: 0;
+}
+
+.card {
+  padding: var(--pad);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-connection {
+  background-image: linear-gradient(140deg, var(--brand-soft), transparent 65%);
+}
+
+.card-head {
+  margin-bottom: var(--gap);
+}
+
+.card-title {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.card-hint {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.output-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.badge {
+  flex: none;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background-color: var(--brand-soft);
+  color: var(--brand-strong);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.field-grid,
+.connection-grid {
+  display: grid;
+  gap: var(--field-gap);
+}
+
+.connection-grid {
+  align-items: end;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.input,
+.textarea {
   width: 100%;
+  color: var(--text);
+  background-color: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  outline: none;
 }
 
-.panel-section {
-  margin: 20px 0;
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.72;
+}
+
+.input {
+  height: var(--control-h);
+  padding: 0 14px;
+  font: 14px 'Inter', sans-serif;
+  transition: border-color 0.18s, box-shadow 0.18s, background-color 0.18s;
+}
+
+.input:hover {
+  border-color: var(--border-strong);
+}
+
+.input:focus {
+  background-color: var(--surface);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.textarea {
+  height: clamp(240px, 45vh, 420px);
+  padding: 16px;
+  font: 13px/1.65 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  resize: none;
+  tab-size: 4;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: var(--field-gap);
+}
+
+.connection-actions {
+  margin-top: 0;
+}
+
+.button {
+  flex: 0 1 auto;
+  min-width: 170px;
+  height: var(--control-h);
+  padding: 0 18px;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  outline: none;
+  font: 600 14px 'Inter', sans-serif;
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.18s, filter 0.18s;
+}
+
+.brand-mark,
+.button {
+  background: linear-gradient(140deg, var(--brand), var(--brand-strong));
+}
+
+.button:hover {
+  filter: brightness(1.06);
+  box-shadow: var(--shadow-md);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:focus-visible {
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.button-ghost {
+  background: var(--surface-muted);
+  border-color: var(--border-strong);
+  color: var(--brand-strong);
+}
+
+.button-ghost:hover {
+  background: var(--brand-soft);
+  border-color: var(--brand);
+}
+
+.card-output {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 720px) and (max-width: 960px) {
+  .field-grid,
+  .connection-grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .connection-actions {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 961px) {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    padding: 22px 24px 24px;
+  }
+
+  .header {
+    flex: none;
+    margin-bottom: 16px;
+  }
+
+  .connection-grid {
+    grid-template-columns: minmax(180px, 0.55fr) minmax(0, 1fr) auto;
+  }
+
+  .connection-actions {
+    flex-wrap: nowrap;
+  }
+
+  .main {
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+
+  .panel {
+    min-height: 0;
+    padding-right: 4px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  .panel > .card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .output,
+  .card-output {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .textarea {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+  }
+}
+
+@media (min-width: 1120px) {
+  .field-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 961px) and (max-height: 880px) {
+  :root {
+    --pad: 15px;
+    --gap: 11px;
+    --field-gap: 11px;
+    --control-h: 39px;
+  }
+
+  .page {
+    padding: 16px 20px 18px;
+  }
+
+  .header {
+    gap: 12px;
+    margin-bottom: 13px;
+  }
+
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-title {
+    font-size: 19px;
+  }
+
+  .textarea {
+    padding: 14px;
+  }
+}
+
+@media (min-width: 961px) and (max-height: 720px) {
+  .panel .card-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .page {
+    padding: 22px 14px 36px;
+  }
+
+  .card {
+    border-radius: var(--r-md);
+  }
+
+  .brand-title {
+    font-size: 19px;
+  }
+
+  .button {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .connection-actions .button {
+    flex: 1 1 0;
+    padding: 0 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
 }
